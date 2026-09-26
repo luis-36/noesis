@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noesis — Tres lecturas. Un perfil.</title>
+  <meta name="description" content="Tres lecturas. Un perfil. Vínculo, mente y esfera social — laboratorio de lectura Noesis." />
+  <meta name="theme-color" content="#f3efe6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!--
+    ========== GOOGLE ADSENSE ==========
+    1. Crea tu cuenta en https://www.google.com/adsense
+    2. Añade tu sitio y obtén el código de anuncio.
+    3. Pega el script global aquí (en el <head>):
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"
+         crossorigin="anonymous"></script>
+
+    4. En cada .ad-slot de abajo, pega el <ins class="adsbygoogle"> correspondiente
+       y quita data-placeholder="true".
+    =====================================
+  -->
+</head>
+<body>
+  <a href="#contenido" class="sr-only">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <a href="index.html" class="logo" aria-label="Noesis, inicio">
+        <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+          <circle cx="18" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="30" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="24" cy="30" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        Noesis
+      </a>
+      <a href="perfil.html" class="perfil-link">Perfil <strong data-perfil-count>0 / 3</strong></a>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- AD SLOT: banner superior (opcional) -->
+    <div class="ad-slot ad-banner" data-placeholder="true" aria-hidden="true">
+      <!-- Pega aquí tu unidad AdSense (ej. horizontal 728x90 o responsive) -->
+      Espacio para anuncio
+    </div>
+
+    <section class="hero">
+      <p class="kicker">Laboratorio de lectura</p>
+      <h1>Tres lecturas.<em>Un perfil.</em></h1>
+      <p class="lead">
+        Vínculo, mente y esfera social se leen juntas. Empieza por el eje que te llama.
+        El retrato se nombra cuando los tres coinciden.
+      </p>
+      <div class="actions">
+        <a href="test.html?slug=vinculo" class="btn btn-primary">Empezar mi perfil</a>
+      </div>
+      <div class="name-field">
+        <label for="nombre">Cómo te nombramos</label>
+        <input type="text" id="nombre" placeholder="Tu nombre, si quieres" autocomplete="name" />
+      </div>
+    </section>
+
+    <div class="venn-wrap" aria-hidden="true">
+      <svg class="venn" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="120" cy="95" r="70" fill="none" stroke="#1a1714" stroke-opacity="0.25" stroke-width="1.2"/>
+        <circle cx="200" cy="95" r="70" fill="none" stroke="#1a1714" stroke-opacity="0.25" stroke-width="1.2"/>
+        <circle cx="160" cy="150" r="70" fill="none" stroke="#1a1714" stroke-opacity="0.25" stroke-width="1.2"/>
+        <text x="70" y="50" text-anchor="middle">Vínculo</text>
+        <text x="250" y="50" text-anchor="middle">Mente</text>
+        <text x="160" y="210" text-anchor="middle">Esfera</text>
+        <text x="160" y="118" text-anchor="middle" font-size="10" letter-spacing="0.2em" fill="#1a1714" fill-opacity="0.45">Perfil</text>
+      </svg>
+    </div>
+
+    <section class="axes" aria-label="Las tres lecturas">
+      <article class="axis-card">
+        <div class="top">
+          <span class="num">01</span>
+          <span class="icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="12" r="4"/><circle cx="15" cy="12" r="4"/></svg>
+          </span>
+        </div>
+        <h3>Vínculo</h3>
+        <p class="axis-label">Cómo te unes</p>
+        <p class="desc">La forma en que amas cuando nadie te está mirando.</p>
+        <div class="meta">
+          <span>6 preguntas · 4 min</span>
+          <a href="test.html?slug=vinculo">Iniciar lectura</a>
+        </div>
+      </article>
+      <article class="axis-card">
+        <div class="top">
+          <span class="num">02</span>
+          <span class="icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+          </span>
+        </div>
+        <h3>Mente</h3>
+        <p class="axis-label">Cómo razonas</p>
+        <p class="desc">No un ranking. Un retrato de cómo piensas cuando aprieta el reloj.</p>
+        <div class="meta">
+          <span>6 preguntas · 5 min</span>
+          <a href="test.html?slug=mente">Iniciar lectura</a>
+        </div>
+      </article>
+      <article class="axis-card">
+        <div class="top">
+          <span class="num">03</span>
+          <span class="icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/></svg>
+          </span>
+        </div>
+        <h3>Esfera</h3>
+        <p class="axis-label">Cómo te leen</p>
+        <p class="desc">El efecto que dejas en una sala cuando aún no has hablado.</p>
+        <div class="meta">
+          <span>6 preguntas · 4 min</span>
+          <a href="test.html?slug=esfera">Iniciar lectura</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- AD SLOT: entre secciones -->
+    <div class="ad-slot ad-infeed" data-placeholder="true" aria-hidden="true">
+      Espacio para anuncio
+    </div>
+
+    <section class="steps" aria-label="Cómo funciona">
+      <div class="step">
+        <p class="num">01</p>
+        <h3>Eliges un eje</h3>
+        <p>El que te tira ahora. No hace falta el orden.</p>
+      </div>
+      <div class="step">
+        <p class="num">02</p>
+        <h3>Respondes sin pose</h3>
+        <p>Seis escenas. La primera impresión suele ser la cierta.</p>
+      </div>
+      <div class="step">
+        <p class="num">03</p>
+        <h3>Se nombra el patrón</h3>
+        <p>Una lectura, no un ranking. Luego, el siguiente espejo.</p>
+      </div>
+    </section>
+
+    <section class="partner">
+      <div class="inner">
+        <p class="kicker">Socio de Noesis</p>
+        <h2>Instituto Vespera</h2>
+        <p>Cuatro semanas para leer lo que tu entorno no dice.</p>
+        <p class="mt-2" style="font-size:0.9rem">Un programa de atención sostenida: vínculo, criterio y presencia social. El mismo triángulo que acabas de recorrer, con práctica.</p>
+        <a href="vespera.html" class="btn btn-primary">Conocer el programa</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p class="brand">Noesis</p>
+      <p>Lecturas de estilo en tres ejes. No sustituyen evaluación clínica ni profesional.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var input = document.getElementById("nombre");
+      if (input) {
+        input.value = NoesisStore.getName();
+        input.addEventListener("change", function () {
+          NoesisStore.setName(input.value);
+        });
+        input.addEventListener("blur", function () {
+          NoesisStore.setName(input.value);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

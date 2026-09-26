@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noesis — Lectura</title>
+  <meta name="description" content="Lectura de estilo Noesis." />
+  <meta name="theme-color" content="#f3efe6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- AdSense: pega el script global en el head si aún no está en todas las páginas -->
+</head>
+<body>
+  <a href="#contenido" class="sr-only">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="inner">
+      <a href="index.html" class="logo" aria-label="Noesis, inicio">
+        <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+          <circle cx="18" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="30" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="24" cy="30" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        Noesis
+      </a>
+      <a href="perfil.html" class="perfil-link">Perfil <strong data-perfil-count>0 / 3</strong></a>
+    </div>
+  </header>
+
+  <main id="contenido" class="test-page">
+    <!-- INTRO -->
+    <div id="intro-view">
+      <div class="progress-bar"><span style="width:0%"></span></div>
+      <p class="test-meta">
+        <span id="intro-icon"></span>
+        <span id="intro-index"></span>
+        <span>·</span>
+        <span id="intro-axis" class="kicker" style="letter-spacing:0.12em"></span>
+      </p>
+      <h1 id="intro-name"></h1>
+      <p class="intro" id="intro-text"></p>
+      <p class="info" id="intro-info"></p>
+
+      <div class="name-field" style="max-width:100%;margin:1.5rem 0 2rem">
+        <label for="nombre">Cómo te nombramos</label>
+        <input type="text" id="nombre" placeholder="Tu nombre, si quieres" autocomplete="name" />
+      </div>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+        <button type="button" class="btn btn-primary" id="btn-start">Empezar la lectura</button>
+        <a href="index.html" class="btn btn-ghost">Otra vez no</a>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz-view" class="hidden">
+      <div class="progress-bar"><span id="quiz-progress" style="width:0%"></span></div>
+      <p class="test-meta" id="quiz-counter">01 / 06</p>
+      <h2 class="quiz-q" id="quiz-prompt"></h2>
+      <div class="options" id="quiz-options" role="group" aria-label="Opciones"></div>
+      <div class="quiz-nav">
+        <button type="button" class="btn btn-ghost" id="btn-back">Atrás</button>
+        <button type="button" class="btn btn-primary" id="btn-next" disabled>Siguiente</button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result-view" class="hidden result-page" style="padding:0">
+      <p class="kicker" id="result-axis"></p>
+      <p class="kicker-trait" id="result-kicker"></p>
+      <h1 class="trait-name" id="result-name"></h1>
+      <p class="portrait" id="result-portrait"></p>
+      <ul id="result-lines"></ul>
+
+      <!-- AD SLOT: después del resultado (buen lugar para AdSense) -->
+      <div class="ad-slot ad-rectangle" data-placeholder="true" style="margin:2rem auto" aria-hidden="true">
+        Espacio para anuncio
+      </div>
+
+      <div class="result-actions">
+        <a href="perfil.html" class="btn btn-primary">Ver mi perfil</a>
+        <a href="index.html" class="btn btn-outline">Otras lecturas</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <p class="brand">Noesis</p>
+      <p>Lecturas de estilo en tres ejes. No sustituyen evaluación clínica ni profesional.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var slug = params.get("slug") || "vinculo";
+      var test = NOESIS.getTest(slug);
+      if (!test) {
+        location.href = "index.html";
+        return;
+      }
+
+      document.title = "Noesis — " + test.name;
+
+      var answers = [];
+      var current = 0;
+      var selected = null;
+
+      // Elements
+      var introView = document.getElementById("intro-view");
+      var quizView = document.getElementById("quiz-view");
+      var resultView = document.getElementById("result-view");
+
+      // Fill intro
+      document.getElementById("intro-index").textContent = test.index;
+      document.getElementById("intro-axis").textContent = test.axis.toUpperCase();
+      document.getElementById("intro-name").textContent = test.name;
+      document.getElementById("intro-text").textContent = test.intro;
+      document.getElementById("intro-info").textContent =
+        test.questions.length + " preguntas · " + test.minutes + " minutos · sin registro";
+
+      var nameInput = document.getElementById("nombre");
+      nameInput.value = NoesisStore.getName();
+      nameInput.addEventListener("change", function () {
+        NoesisStore.setName(nameInput.value);
+      });
+
+      document.getElementById("btn-start").addEventListener("click", function () {
+        NoesisStore.setName(nameInput.value);
+        introView.classList.add("hidden");
+        quizView.classList.remove("hidden");
+        current = 0;
+        answers = [];
+        selected = null;
+        renderQuestion();
+      });
+
+      function renderQuestion() {
+        var q = test.questions[current];
+        var total = test.questions.length;
+        document.getElementById("quiz-counter").textContent =
+          String(current + 1).padStart(2, "0") + " / " + String(total).padStart(2, "0");
+        document.getElementById("quiz-progress").style.width =
+          ((current / total) * 100).toFixed(1) + "%";
+        document.getElementById("quiz-prompt").textContent = q.prompt;
+
+        var box = document.getElementById("quiz-options");
+        box.innerHTML = "";
+        var letters = ["A", "B", "C", "D"];
+        q.options.forEach(function (opt, i) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "option" + (selected === i ? " selected" : "");
+          btn.innerHTML =
+            '<span class="letter">' +
+            letters[i] +
+            "</span><span>" +
+            opt.label +
+            "</span>";
+          btn.addEventListener("click", function () {
+            selected = i;
+            Array.from(box.children).forEach(function (c, j) {
+              c.classList.toggle("selected", j === i);
+            });
+            document.getElementById("btn-next").disabled = false;
+          });
+          box.appendChild(btn);
+        });
+
+        // Restore previous answer if any
+        if (typeof answers[current] === "number") {
+          selected = answers[current];
+          if (box.children[selected]) box.children[selected].classList.add("selected");
+          document.getElementById("btn-next").disabled = false;
+        } else {
+          selected = null;
+          document.getElementById("btn-next").disabled = true;
+        }
+
+        document.getElementById("btn-back").style.visibility =
+          current === 0 ? "hidden" : "visible";
+        document.getElementById("btn-next").textContent =
+          current === total - 1 ? "Ver lectura" : "Siguiente";
+      }
+
+      document.getElementById("btn-back").addEventListener("click", function () {
+        if (current === 0) return;
+        answers[current] = selected;
+        current -= 1;
+        selected = answers[current];
+        renderQuestion();
+      });
+
+      document.getElementById("btn-next").addEventListener("click", function () {
+        if (selected === null) return;
+        answers[current] = selected;
+        if (current < test.questions.length - 1) {
+          current += 1;
+          selected = typeof answers[current] === "number" ? answers[current] : null;
+          renderQuestion();
+        } else {
+          finish();
+        }
+      });
+
+      function finish() {
+        var result = NOESIS.score(test, answers);
+        NoesisStore.setResult(test.slug, result);
+
+        quizView.classList.add("hidden");
+        resultView.classList.remove("hidden");
+
+        document.getElementById("result-axis").textContent =
+          test.index + " · " + test.axis.toUpperCase();
+        document.getElementById("result-kicker").textContent = result.trait.kicker;
+        document.getElementById("result-name").textContent = result.trait.name;
+        document.getElementById("result-portrait").textContent = result.trait.portrait;
+
+        var ul = document.getElementById("result-lines");
+        ul.innerHTML = "";
+        result.trait.lines.forEach(function (line) {
+          var li = document.createElement("li");
+          li.textContent = line;
+          ul.appendChild(li);
+        });
+
+        // Update header count
+        var el = document.querySelector("[data-perfil-count]");
+        if (el) el.textContent = NoesisStore.completedCount() + " / 3";
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+    })();
+  </script>
+</body>
+</html>
